@@ -1,6 +1,13 @@
 ## Mobile Icon Generator
 A simple script to generate icon assets for Android and iOS.
 
+## Features
+* Most Android and iOS icon sizes
+* Whitespace trimming
+* Changing the original icon color
+* Material and standard icon sizes for Android
+* Optionally save generated icons directly in your project's asset folder
+
 ## Supported icons
 Most types of icons are supported.  Sizes are based on:
 * [Icon Handbook](http://iconhandbook.co.uk/reference/chart/android/) for Android
@@ -25,5 +32,10 @@ For Android, `drawable-xxxx` directories are created in the given directory if t
 
 ## Usage
 Download the repository and place the icon in the extracted folder.  Run `./icon_generator.sh` for usage instructions.
+
+### Example
+The following command will create an `ic_test.imageset` asset in my iOS project directory, and will include 1x, 2x, and 3x images, as well as the Xcode asset file, `Contents.json`.
+
+`./icon_generator.sh -i ic_test.png -p ios -t tabbar -d ~/Workspace/my-project/MyProject/Assets.xcassets/`
 
 Enjoy!
