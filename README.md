@@ -22,6 +22,7 @@ Most types of icons are supported.  Sizes are based on:
 * Application icon
 * Tabbar
 * Toolbar
+* `UITableViewCell` image view
 
 ## How it works
 The script uses [ImageMagick](https://www.imagemagick.org/script/index.php) CLI tool to take a given icon, scale, colorize, and create an asset for the desired platform.

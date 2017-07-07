@@ -40,6 +40,11 @@ DIR=ios_tabbar
 mkdir $DIR
 ./icon_generator.sh -i $IMG -p ios -t tabbar -d $DIR/
 
+echo "iOS tableviewcell icons..."
+DIR=ios_tableviewcell
+mkdir $DIR
+./icon_generator.sh -i $IMG -p ios -t tableviewcell -d $DIR/
+
 echo "Android action icons..."
 DIR=android_action
 mkdir $DIR

@@ -9,8 +9,9 @@ usage() {
     echo "     ios"
     echo "     android"
     echo "  -t Most iOS and Anroid icons are supported. Valid options:"
-    echo "     toolbar (iOS)"
-    echo "     tabbar (iOS)"
+    echo "     toolbar (iOS) (1x = 22x22)"
+    echo "     tabbar (iOS) (1x = 25x25)"
+    echo "     tableviewcell (iOS) (1x = 25x25)"
     echo "     app (iOS)"
     echo "     action (Android)"
     echo "     notification (Android)"
@@ -195,6 +196,11 @@ handle_ios() {
     # Toolbar
     if [ $TYPE = toolbar ]; then
         gen_ios_icon $DIR 22x22 44x44 66x66
+    fi
+
+    # UITableViewCell
+    if [ $TYPE = tableviewcell ]; then
+        gen_ios_icon $DIR 25x25 50x50 75x75
     fi
 
     # Create Contents.json file.
