@@ -16,6 +16,9 @@ usage() {
     echo "     action (Android)"
     echo "     notification (Android)"
     echo "     small (Android)"
+    echo "     custom (Android and iOS)"
+    echo "  -s Optional. The size of the new icon; used for -t == custom"
+    echo "     -s 100"
     echo "  -d The directory the images will be saved to. Default is the current directory."
     echo "     On iOS, icons, along with a Contents.json file, are saved in a .imageset file."
     echo "     On Android, a new directory for each density is created, if it doesn't already exist."
@@ -38,7 +41,7 @@ usage() {
 TRIM=0
 COLORIZE=0
 MATERIAL=0
-while getopts "i:p:t:d:c:wm" OPTION
+while getopts "i:p:t:s:d:c:wm" OPTION
 do
     case $OPTION in
     i)
@@ -49,6 +52,9 @@ do
         ;;
     t)
         TYPE=$OPTARG
+        ;;
+    s) 
+        SIZE=$OPTARG
         ;;
     d)
         DIR=$OPTARG
@@ -86,6 +92,12 @@ if [ -z $TYPE ]; then
     exit 1
 fi
 
+if [ $TYPE = custom ] && [ -z $SIZE ]; then
+    echo ERROR: Size not specified for type 'custom'.
+    usage
+    exit 1
+fi
+
 # File extension of the input image.
 EXT=.${IMG##*.}
 
@@ -93,20 +105,176 @@ EXT=.${IMG##*.}
 FILE_NAME=${IMG%.*}
 ORIGINAL_FILE_NAME=$FILE_NAME
 
+# Creates a given directory if it doesn't already exist.
+makeDir() {
+    if [ ! -d "$1" ]; then
+        mkdir $1
+    fi
+}
+
 # iOS app icon
 if [ $PLATFORM = ios -a $TYPE = app ]; then
-    convert $IMG -resize 20x20 $DIR$FILE_NAME"_20"$EXT
-    convert $IMG -resize 29x29 $DIR$FILE_NAME"_29"$EXT
-    convert $IMG -resize 40x40 $DIR$FILE_NAME"_40"$EXT
-    convert $IMG -resize 60x60 $DIR$FILE_NAME"_60"$EXT
-    convert $IMG -resize 58x58 $DIR$FILE_NAME"_58"$EXT
-    convert $IMG -resize 76x76 $DIR$FILE_NAME"_76"$EXT
-    convert $IMG -resize 87x87 $DIR$FILE_NAME"_87"$EXT
-    convert $IMG -resize 80x80 $DIR$FILE_NAME"_80"$EXT
-    convert $IMG -resize 120x120 $DIR$FILE_NAME"_120"$EXT
-    convert $IMG -resize 152x152 $DIR$FILE_NAME"_152"$EXT
-    convert $IMG -resize 167x167 $DIR$FILE_NAME"_167"$EXT
-    convert $IMG -resize 180x180 $DIR$FILE_NAME"_180"$EXT
+    # Create .imageset directory.
+    DIR=$DIR$ORIGINAL_FILE_NAME".appiconset"
+    makeDir $DIR
+
+    FILE_20x20=$FILE_NAME"_20"$EXT
+    FILE_29x29=$FILE_NAME"_29"$EXT
+    FILE_40x40=$FILE_NAME"_40"$EXT
+    FILE_40x40_1=$FILE_NAME"_40-1"$EXT
+    FILE_40x40_2=$FILE_NAME"_40-2"$EXT
+    FILE_60x60=$FILE_NAME"_60"$EXT
+    FILE_58x58=$FILE_NAME"_58"$EXT
+    FILE_58x58_1=$FILE_NAME"_58-1"$EXT
+    FILE_76x76=$FILE_NAME"_76"$EXT
+    FILE_87x87=$FILE_NAME"_87"$EXT
+    FILE_80x80=$FILE_NAME"_80"$EXT
+    FILE_80x80_1=$FILE_NAME"_80-1"$EXT
+    FILE_120x120=$FILE_NAME"_120"$EXT
+    FILE_120x120_1=$FILE_NAME"_120-1"$EXT
+    FILE_152x152=$FILE_NAME"_152"$EXT
+    FILE_167x167=$FILE_NAME"_167"$EXT
+    FILE_180x180=$FILE_NAME"_180"$EXT
+    FILE_1024x1024=$FILE_NAME"_1024"$EXT
+
+    convert $IMG -resize 20x20 $DIR/$FILE_20x20
+    convert $IMG -resize 29x29 $DIR/$FILE_29x29
+    convert $IMG -resize 40x40 $DIR/$FILE_40x40
+    convert $IMG -resize 40x40 $DIR/$FILE_40x40_1
+    convert $IMG -resize 40x40 $DIR/$FILE_40x40_2
+    convert $IMG -resize 60x60 $DIR/$FILE_60x60
+    convert $IMG -resize 58x58 $DIR/$FILE_58x58
+    convert $IMG -resize 58x58 $DIR/$FILE_58x58_1
+    convert $IMG -resize 76x76 $DIR/$FILE_76x76
+    convert $IMG -resize 87x87 $DIR/$FILE_87x87
+    convert $IMG -resize 80x80 $DIR/$FILE_80x80
+    convert $IMG -resize 80x80 $DIR/$FILE_80x80_1
+    convert $IMG -resize 120x120 $DIR/$FILE_120x120
+    convert $IMG -resize 120x120 $DIR/$FILE_120x120_1
+    convert $IMG -resize 152x152 $DIR/$FILE_152x152
+    convert $IMG -resize 167x167 $DIR/$FILE_167x167
+    convert $IMG -resize 180x180 $DIR/$FILE_180x180
+    convert $IMG -resize 1024x1024 $DIR/$FILE_1024x1024
+
+    # Create Contents.json file.
+    cat << EOF > $DIR/Contents.json
+{
+  "images" : [
+    {
+      "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "$FILE_40x40_1",
+      "scale" : "2x"
+    },
+    {
+      "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "$FILE_60x60",
+      "scale" : "3x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "$FILE_58x58",
+      "scale" : "2x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "$FILE_87x87",
+      "scale" : "3x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "$FILE_80x80",
+      "scale" : "2x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "$FILE_120x120",
+      "scale" : "3x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "$FILE_120x120_1",
+      "scale" : "2x"
+    },
+    {
+      "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "$FILE_180x180",
+      "scale" : "3x"
+    },
+    {
+      "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "$FILE_20x20",
+      "scale" : "1x"
+    },
+    {
+      "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "$FILE_40x40",
+      "scale" : "2x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "$FILE_29x29",
+      "scale" : "1x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "$FILE_58x58_1",
+      "scale" : "2x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "$FILE_40x40_2",
+      "scale" : "1x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "$FILE_80x80_1",
+      "scale" : "2x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "$FILE_76x76",
+      "scale" : "1x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "$FILE_152x152",
+      "scale" : "2x"
+    },
+    {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "$FILE_167x167",
+      "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "$FILE_1024x1024",
+      "scale" : "1x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "ios_icon_set"
+  }
+} 
+EOF
 
     exit 1
 fi
@@ -128,13 +296,6 @@ if [ $TRIM -ne 0 ]; then
 else
     cp $FILE $FILE_COPY
 fi
-
-# Creates a given directory if it doesn't already exist.
-makeDir() {
-    if [ ! -d "$1" ]; then
-        mkdir $1
-    fi
-}
 
 MDPI=$DIR"drawable-mdpi"
 HDPI=$DIR"drawable-hdpi"
@@ -203,30 +364,35 @@ handle_ios() {
         gen_ios_icon $DIR 25x25 50x50 75x75
     fi
 
+    # Custom
+    if [ $TYPE = custom ]; then
+        gen_ios_icon $DIR $SIZEx$SIZE `expr $SIZE \\* 2`x`expr $SIZE \\* 2` `expr $SIZE \\* 3`x`expr $SIZE \\* 3`
+    fi
+
     # Create Contents.json file.
     cat << EOF > $DIR/Contents.json
 {
-    "images" : [
-        {
-            "idiom" : "universal",
-            "filename" : "$FILE_1X",
-            "scale" : "1x"
-        },
-        {
-            "idiom" : "universal",
-            "filename" : "$FILE_2X",
-            "scale" : "2x"
-        },
-        {
-            "idiom" : "universal",
-            "filename" : "$FILE_3X",
-            "scale" : "3x"
-        }
-    ],
-    "info" : {
-        "version" : 1,
-        "author" : "ios_icon_set"
+  "images" : [
+    {
+      "idiom" : "universal",
+      "filename" : "$FILE_1X",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "$FILE_2X",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "$FILE_3X",
+      "scale" : "3x"
     }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "ios_icon_set"
+  }
 } 
 EOF
 }

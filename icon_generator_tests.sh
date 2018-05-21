@@ -3,7 +3,7 @@
 # Tests all use cases of ios_icon_generator.sh.  Will save each case in a different folder in the current directory.
 
 usage() {
-    echo Usage: icon_set_tests.sh file_name.png
+    echo Usage: icon_generator_tests.sh file_name.png
 }
 
 IMG=$1
@@ -44,6 +44,11 @@ echo "iOS tableviewcell icons..."
 DIR=ios_tableviewcell
 mkdir $DIR
 ./icon_generator.sh -i $IMG -p ios -t tableviewcell -d $DIR/
+
+echo "iOS custom icons..."
+DIR=ios_custom
+mkdir $DIR
+./icon_generator.sh -i $IMG -p ios -t custom -s 100 -d $DIR/
 
 echo "Android action icons..."
 DIR=android_action

@@ -6,6 +6,7 @@
 rm -rf ios_app
 rm -rf ios_tabbar
 rm -rf ios_tableviewcell
+rm -rf ios_custom
 rm -rf ios_toolbar
 rm -rf ios_toolbar_colorized
 rm -rf ios_toolbar_trimmed
