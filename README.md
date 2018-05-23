@@ -24,10 +24,13 @@ Most types of icons are supported.  Sizes are based on:
 * Toolbar
 * `UITableViewCell` image view
 
+### Custom
+* Using `-t custom` and `-s <size>` flags, you can generate custom sizes for iOS.
+
 ## How it works
 The script uses [ImageMagick](https://www.imagemagick.org/script/index.php) CLI tool to take a given icon, scale, colorize, and create an asset for the desired platform.
 
-For iOS, a `.imageset` package is created and saved to a given directory.
+For iOS, a `.imageset` or `.appiconset` package is created and saved to a given directory.
 
 For Android, `drawable-xxxx` directories are created in the given directory if they don't already exist, and the generated icons are saved to these directories.
 
