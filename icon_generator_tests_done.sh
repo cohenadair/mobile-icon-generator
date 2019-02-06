@@ -13,3 +13,4 @@ rm -rf ios_toolbar_trimmed
 rm -rf android_action
 rm -rf android_action_material
 rm -rf android_small
+rm -rf android_custom

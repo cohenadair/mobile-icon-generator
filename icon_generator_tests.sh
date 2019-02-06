@@ -64,3 +64,8 @@ echo "Android small icons..."
 DIR=android_small
 mkdir $DIR
 ./icon_generator.sh -i $IMG -p android -t small -d $DIR/
+
+echo "Android custom icons..."
+DIR=android_custom
+mkdir $DIR
+./icon_generator.sh -i $IMG -p android -t custom -s 100 -d $DIR/

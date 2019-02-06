@@ -332,6 +332,15 @@ handle_android() {
     if [ $TYPE = small ]; then
         gen_android 16x16 24x24 32x32 48x48 64x64
     fi
+
+    # Custom
+    if [ $TYPE = custom ]; then
+        gen_android $SIZEx$SIZE \
+                `expr $SIZE \\* 3 / 2`x`expr $SIZE \\* 3 / 2` \
+                `expr $SIZE \\* 2`x`expr $SIZE \\* 2` \
+                `expr $SIZE \\* 3`x`expr $SIZE \\* 3` \
+                `expr $SIZE \\* 4`x`expr $SIZE \\* 4`
+    fi
 }
 
 gen_ios_icon() {
