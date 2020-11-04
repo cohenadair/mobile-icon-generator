@@ -13,6 +13,7 @@ usage() {
     echo "     tabbar (iOS) (1x = 25x25)"
     echo "     tableviewcell (iOS) (1x = 25x25)"
     echo "     app (iOS)"
+    echo "     watch (iOS)"
     echo "     action (Android)"
     echo "     notification (Android)"
     echo "     small (Android)"
@@ -274,6 +275,135 @@ if [ $PLATFORM = ios -a $TYPE = app ]; then
     "author" : "ios_icon_set"
   }
 } 
+EOF
+
+    exit 1
+fi
+
+# iOS watch icon
+if [ $PLATFORM = ios -a $TYPE = watch ]; then
+    # Create .imageset directory.
+    DIR=$DIR$ORIGINAL_FILE_NAME".appiconset"
+    makeDir $DIR
+
+    FILE_48x48=$FILE_NAME"_48"$EXT
+    FILE_55x55=$FILE_NAME"_55"$EXT
+    FILE_58x58=$FILE_NAME"_58"$EXT
+    FILE_87x87=$FILE_NAME"_87"$EXT
+    FILE_80x80=$FILE_NAME"_80"$EXT
+    FILE_88x88=$FILE_NAME"_88"$EXT
+    FILE_100x100=$FILE_NAME"_100"$EXT
+    FILE_172x172=$FILE_NAME"_172"$EXT
+    FILE_196x196=$FILE_NAME"_196"$EXT
+    FILE_216x216=$FILE_NAME"_216"$EXT
+    FILE_1024x1024=$FILE_NAME"_1024"$EXT
+
+    convert $IMG -resize 48x48 $DIR/$FILE_48x48
+    convert $IMG -resize 55x55 $DIR/$FILE_55x55
+    convert $IMG -resize 58x58 $DIR/$FILE_58x58
+    convert $IMG -resize 87x87 $DIR/$FILE_87x87
+    convert $IMG -resize 80x80 $DIR/$FILE_80x80
+    convert $IMG -resize 88x88 $DIR/$FILE_88x88
+    convert $IMG -resize 100x100 $DIR/$FILE_100x100
+    convert $IMG -resize 172x172 $DIR/$FILE_172x172
+    convert $IMG -resize 196x196 $DIR/$FILE_196x196
+    convert $IMG -resize 216x216 $DIR/$FILE_216x216
+    convert $IMG -resize 1024x1024 $DIR/$FILE_1024x1024
+
+    # Create Contents.json file.
+    cat << EOF > $DIR/Contents.json
+{
+  "images" : [
+    {
+      "size" : "24x24",
+      "idiom" : "watch",
+      "filename" : "$FILE_48x48",
+      "scale" : "2x",
+      "role" : "notificationCenter",
+      "subtype" : "38mm"
+    },
+    {
+      "size" : "27.5x27.5",
+      "idiom" : "watch",
+      "filename" : "$FILE_55x55",
+      "scale" : "2x",
+      "role" : "notificationCenter",
+      "subtype" : "42mm"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "watch",
+      "filename" : "$FILE_58x58",
+      "role" : "companionSettings",
+      "scale" : "2x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "watch",
+      "filename" : "$FILE_87x87",
+      "role" : "companionSettings",
+      "scale" : "3x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "watch",
+      "filename" : "$FILE_80x80",
+      "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "38mm"
+    },
+    {
+      "size" : "44x44",
+      "idiom" : "watch",
+      "filename" : "$FILE_88x88",
+      "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "40mm"
+    },
+    {
+      "size" : "50x50",
+      "idiom" : "watch",
+      "filename" : "$FILE_100x100",
+      "scale" : "2x",
+      "role" : "appLauncher",
+      "subtype" : "44mm"
+    },
+    {
+      "size" : "86x86",
+      "idiom" : "watch",
+      "filename" : "$FILE_172x172",
+      "scale" : "2x",
+      "role" : "quickLook",
+      "subtype" : "38mm"
+    },
+    {
+      "size" : "98x98",
+      "idiom" : "watch",
+      "filename" : "$FILE_196x196",
+      "scale" : "2x",
+      "role" : "quickLook",
+      "subtype" : "42mm"
+    },
+    {
+      "size" : "108x108",
+      "idiom" : "watch",
+      "filename" : "$FILE_216x216",
+      "scale" : "2x",
+      "role" : "quickLook",
+      "subtype" : "44mm"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "watch-marketing",
+      "filename" : "$FILE_1024x1024",
+      "scale" : "1x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "ios_icon_set"
+  }
+}
 EOF
 
     exit 1

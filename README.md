@@ -20,6 +20,7 @@ Most types of icons are supported.  Sizes are based on:
 
 ### iOS
 * Application icon
+* Watch app icon
 * Tabbar
 * Toolbar
 * `UITableViewCell` image view
