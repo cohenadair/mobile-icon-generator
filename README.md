@@ -11,7 +11,7 @@ A simple script to generate icon assets for Android and iOS.
 ## Supported icons
 Most types of icons are supported.  Sizes are based on:
 * [Icon Handbook](http://iconhandbook.co.uk/reference/chart/android/) for Android
-* [Human Interface Guidelines](https://developer.apple.com/ios/human-interface-guidelines/graphics/custom-icons/) for iOS
+* [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/foundations/app-icons) for iOS
 
 ### Android
 * Action, dialog, and tab
